@@ -31,17 +31,13 @@ def test_formatter(width, text, completed, formatter):
     else:
         bar.completed = completed
     ltxt = wcwidth.wcswidth(text)
-    ldel = wcwidth.wcswidth(bar.start_delimiter) + wcwidth.wcswidth(bar.end_delimiter)
-    spaces = width - ldel - ltxt
+    spaces = width - ltxt
     txt = (spaces//2 * ' ') + text + (spaces//2 * ' ') + (spaces % 2 * ' ')
 
     if formatter is None:
-        assert str(bar) == '{}{}{}'.format(bar.start_delimiter, txt, bar.end_delimiter)
+        assert str(bar) == txt
     else:
         with colorful.with_8_ansi_colors() as cf:
             bar.formatter = getattr(cf, formatter)
-            pos = int((width - ldel) * completed)
-            assert str(bar) == '{}{}{}{}'.format(
-                bar.start_delimiter,
-                bar.formatter(txt[:pos]), txt[pos:],
-                bar.end_delimiter)
+            pos = int(width * completed)
+            assert str(bar) == '{}{}'.format(bar.formatter(txt[:pos]), txt[pos:])

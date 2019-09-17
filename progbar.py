@@ -7,30 +7,25 @@ class Bar:
     text = ''
     formatter = None
     width = 10
-    start_delimiter = '|'
-    end_delimiter = '|'
 
     # [0.0, 1.0]
     completed = 0
 
     def __str__(self):
         formatter = self.formatter or (lambda x:x)
-        start_delimiter_width = ulen(self.start_delimiter)
-        end_delimiter_width = ulen(self.end_delimiter)
-        content_width = self.width - start_delimiter_width - end_delimiter_width
+        width = self.width
         text_width = ulen(self.text)
-        content_empty_width = content_width - text_width
+        content_empty_width = width - text_width
         content_empty = content_empty_width // 2 * ' '
         content_extra = content_empty_width % 2 * ' '
-        step = int(self.completed * content_width)
+        step = int(self.completed * width)
         content = f'{content_empty}{self.text}{content_empty}{content_extra}'
-        content = '{}{}'.format(formatter(content[:step]), content[step:])
-        return f'{self.start_delimiter}{content}{self.end_delimiter}'
+        return '{}{}'.format(formatter(content[:step]), content[step:])
 
 
 class ProgressBar:
 
-    def __init__(self, prefix='', suffix='', bar_text='{b.percentage:3}%', total=100, width=40):
+    def __init__(self, prefix='|', suffix='|', bar_text='{b.percentage:3}%', total=100, width=40):
         self.prefix = prefix
         self.suffix = suffix
         self.bar_text = bar_text
