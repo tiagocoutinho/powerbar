@@ -6,23 +6,17 @@ import sys
 from setuptools import setup, find_packages
 
 
-if sys.version_info < (3, 6):
-    print('progbar needs python >= 3.6')
-    exit(1)
-
 TESTING = any(x in sys.argv for x in ["test", "pytest"])
 
-requirements = ['wcwidth']
+requirements = ['wcwidth', 'blessings']
 
 setup_requirements = []
 if TESTING:
     setup_requirements += ['pytest-runner']
 test_requirements = ['pytest', 'pytest-cov']
-extras_requirements = {
-}
 
 setup(
-    name='progbar',
+    name='powerbar',
     author="Jose Tiago Macara Coutinho",
     author_email='coutinhotiago@gmail.com',
     classifiers=[
@@ -32,19 +26,20 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7'
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8'
     ],
     description="TLI progress bar",
     install_requires=requirements,
-    license="MIT license",
-    long_description="TLI progress bar",
-    keywords='progress, TLI, CLI',
-    packages=find_packages(),
+    license="LGPL3+",
+    long_description="TLI bars (vbar, progress bar, spark)",
+    keywords='progress, bar, ascii, TLI, CLI',
+    packages=find_packages(include=['powerbar']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    extras_require=extras_requirements,
-    url='https://gitlab.com/tiagocoutinho/progbar',
+    python_requires='>=3.5',
+    url='https://gitlab.com/tiagocoutinho/powerbar',
     version='0.1.0',
     zip_safe=True
 )

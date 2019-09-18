@@ -5,7 +5,7 @@ import colorful
 
 Rocket = emoji.EMOJI_UNICODE[':rocket:']
 
-from progbar import Bar
+from powerbar import ProgressBar
 
 
 @pytest.mark.parametrize('text', [None, '', 'hello', 'go '+ Rocket],
@@ -14,10 +14,10 @@ from progbar import Bar
                          ids=['w(<dft>)', 'w(21)', 'w(80)'])
 @pytest.mark.parametrize('completed', [None, 0, 0.25, 0.77, 1.0],
                          ids=['pdefault', '0%', '25%', '77%', '100%'])
-@pytest.mark.parametrize('formatter', [None, 'on_blue', 'red_on_blue'],
+@pytest.mark.parametrize('style', [None, 'on_blue', 'red_on_blue'],
                          ids=['f(<dft>)', 'f(on_blue)', 'f(red_on_blue)'])
-def test_formatter(width, text, completed, formatter):
-    bar = Bar()
+def test_bar(width, text, completed, style):
+    bar = ProgressBar()
     if width is None:
         width = 10
     else:
@@ -34,10 +34,10 @@ def test_formatter(width, text, completed, formatter):
     spaces = width - ltxt
     txt = (spaces//2 * ' ') + text + (spaces//2 * ' ') + (spaces % 2 * ' ')
 
-    if formatter is None:
+    if style is None:
         assert str(bar) == txt
     else:
         with colorful.with_8_ansi_colors() as cf:
-            bar.formatter = getattr(cf, formatter)
+            bar.style = getattr(cf, style)
             pos = int(width * completed)
-            assert str(bar) == '{}{}'.format(bar.formatter(txt[:pos]), txt[pos:])
+            assert str(bar) == '{}{}'.format(bar.style(txt[:pos]), txt[pos:])
