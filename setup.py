@@ -15,6 +15,9 @@ if TESTING:
     setup_requirements += ['pytest-runner']
 test_requirements = ['pytest', 'pytest-cov']
 
+with open('README.md') as f:
+    description = f.read()
+
 setup(
     name='powerbar',
     author="Jose Tiago Macara Coutinho",
@@ -29,17 +32,18 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8'
     ],
-    description="TLI progress bar",
+    license="GPLv3+",
+    description="Concurrency agnostic socket API",
+    long_description=description,
+    long_description_content_type='text/markdown',
     install_requires=requirements,
-    license="LGPL3+",
-    long_description="TLI bars (vbar, progress bar, spark)",
-    keywords='progress, bar, ascii, TLI, CLI',
+    keywords='progress, bar, ASCII, TLI, CLI',
     packages=find_packages(include=['powerbar']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     python_requires='>=3.5',
-    url='https://gitlab.com/tiagocoutinho/powerbar',
+    url='https://github.com/tiagocoutinho/powerbar',
     version='0.1.0',
     zip_safe=True
 )
